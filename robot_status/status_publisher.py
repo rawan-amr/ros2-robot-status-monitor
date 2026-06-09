@@ -17,6 +17,9 @@ class StatusPublisher(Node):
 
         self.battery_level = 100
 
+        self.temperature = 25
+        self.temperature_increasing = True
+
         self.timer = self.create_timer(
             1.0,
             self.publish_status
@@ -24,7 +27,7 @@ class StatusPublisher(Node):
     
     def publish_status(self):
         msg = String()
-        msg.data = f"Battery: {self.battery_level}%"
+        msg.data = f"Battery: {self.battery_level}% | Temperature: {self.temperature}C"
 
         self.publisher_.publish(msg)
 
@@ -32,6 +35,16 @@ class StatusPublisher(Node):
             self.battery_level = 100
         else:    
             self.battery_level -= 1
+
+        if self.temperature_increasing:
+            self.temperature += 1
+        else:
+            self.temperature -= 1
+        
+        if self.temperature >= 40:
+            self.temperature_increasing = False
+        elif self.temperature <= 25:
+            self.temperature_increasing = True
 
         self.get_logger().info(msg.data)
 
