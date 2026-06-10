@@ -26,6 +26,10 @@ setup(
         'console_scripts': [
             'status_publisher = robot_status.status_publisher:main',
             'status_subscriber = robot_status.status_subscriber:main', 
+            'temperature_publisher = robot_status.temperature_publisher:main',
+            'battery_publisher = robot_status.battery_publisher:main', 
+            'battery_subscriber = robot_status.battery_subscriber:main',
+            'temperature_subscriber = robot_status.temperature_subscriber:main',
         ],
     },
 )
