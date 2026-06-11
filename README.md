@@ -110,7 +110,6 @@ Subscribes to both `/battery_status` and `/temperature_status` and monitors the 
 Build the package:
 
 ```bash
-cd ~/ros2_portfolio_ws
 colcon build
 source install/setup.bash
 ```
