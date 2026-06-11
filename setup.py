@@ -30,6 +30,9 @@ setup(
             'battery_publisher = robot_status.battery_publisher:main', 
             'battery_subscriber = robot_status.battery_subscriber:main',
             'temperature_subscriber = robot_status.temperature_subscriber:main',
+            'battery_monitor = robot_status.battery_monitor:main',
+            'temperature_monitor = robot_status.temperature_monitor:main',
+            'robot_monitor = robot_status.robot_monitor:main',
         ],
     },
 )
