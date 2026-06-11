@@ -9,7 +9,7 @@ The system simulates two robot sensors:
 - Battery Sensor
 - Temperature Sensor
 
-Each sensor publishes its data on a dedicated ROS2 topic, and a corresponding subscriber receives and displays the data.
+Each sensor publishes its data on a dedicated ROS2 topic. Subscribers display the incoming data, while monitoring nodes analyze sensor values and generate warnings when thresholds are exceeded.
 
 ## Motivation
 
@@ -22,13 +22,23 @@ The goal of this project was to gain hands-on experience with:
 - Debugging ROS2 applications
 - Git and GitHub project management
 - ROS2 node modularity and separation of concerns
+- Monitoring and event-based warning generation
+- Multiple subscriptions within a single ROS2 node
 
 ## System Architecture
 
 ```text
 Battery Publisher ------> /battery_status ------> Battery Subscriber
+                           |
+                           +-------------> Battery Monitor
+                           |
+                           +-------------> Robot Monitor
 
 Temperature Publisher --> /temperature_status --> Temperature Subscriber
+                           |
+                           +-------------> Temperature Monitor
+                           |
+                           +-------------> Robot Monitor
 ```
 
 ## Topics
@@ -75,6 +85,18 @@ Publishes temperature values on `/temperature_status`.
 
 Subscribes to `/temperature_status` and displays received messages.
 
+### battery_monitor
+
+Subscribes to `/battery_status` and generates a warning when battery level drops below 20%.
+
+### temperature_monitor
+
+Subscribes to `/temperature_status` and generates a warning when temperature reaches 35C or higher.
+
+### robot_monitor
+
+Subscribes to both `/battery_status` and `/temperature_status` and monitors the overall robot condition.
+
 ## Technologies Used
 
 - ROS2 Jazzy
@@ -117,6 +139,24 @@ Run Temperature Subscriber:
 ros2 run robot_status temperature_subscriber
 ```
 
+Run Battery Monitor:
+
+```bash
+ros2 run robot_status battery_monitor
+```
+
+Run Temperature Monitor:
+
+```bash
+ros2 run robot_status temperature_monitor
+```
+
+Run Robot Monitor:
+
+```bash
+ros2 run robot_status robot_monitor
+```
+
 ## Design Improvement
 
 The project originally used a single topic containing multiple robot status values.
@@ -131,5 +171,6 @@ During development I encountered and resolved several issues including:
 - ROS2 package build and sourcing issues
 - Topic and node configuration mistakes
 - Refactoring a ROS2 system into multiple publishers and subscribers
+- Creating monitoring nodes using ROS2 callbacks
 
 These debugging exercises helped me better understand ROS2 package structure and node communication.
