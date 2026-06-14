@@ -11,7 +11,7 @@ class StatusPublisher(Node):
 
         self.publisher_ = self.create_publisher(
             String,
-            "battery_status",
+            "robot_status",
             10
         )
 

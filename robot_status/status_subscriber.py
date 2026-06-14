@@ -11,7 +11,7 @@ class StatusSubscriber(Node):
 
           self.subscription = self.create_subscription(
                String,
-               "battery_status",
+               "robot_status",
                self.listener_callback,
                10
           )

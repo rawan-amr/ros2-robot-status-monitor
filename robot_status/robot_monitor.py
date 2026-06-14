@@ -1,7 +1,7 @@
 import rclpy
 from rclpy.node import Node
 
-from std_msgs.msg import String
+from std_msgs.msg import Int64
 
 
 class RobotMonitor(Node):
@@ -10,27 +10,25 @@ class RobotMonitor(Node):
           super().__init__("robot_monitor")
 
           self.battery_subscription = self.create_subscription(
-               String,
+               Int64,
                "battery_status",
                self.battery_callback,
                10
           )
 
           self.temperature_subscription = self.create_subscription(
-               String,
+               Int64,
                "temperature_status",
                self.temperature_callback,
                10
           )
     
      def battery_callback(self, msg):
-         self.get_logger().info(msg.data)
-         
-         battery_text = msg.data
-         battery_text = battery_text.replace("Battery: ", "")
-         battery_text = battery_text.replace("%", "")
+         self.get_logger().info(
+              f"Battery: {msg.data}%"
+              )
 
-         battery_level = int(battery_text)
+         battery_level = msg.data
 
          if battery_level <= 20:
               self.get_logger().warning(
@@ -39,13 +37,11 @@ class RobotMonitor(Node):
 
 
      def temperature_callback(self, msg):
-          self.get_logger().info(msg.data)
+          self.get_logger().info(
+               f"Temperature: {msg.data}C"
+               )
 
-          temperature_text = msg.data
-          temperature_text = temperature_text.replace("Temperature: ", "")
-          temperature_text = temperature_text.replace("C", "")
-
-          temperature_value = int(temperature_text)
+          temperature_value = msg.data
 
           if temperature_value >= 35:
                self.get_logger().warning(

@@ -1,7 +1,7 @@
 import rclpy
 from rclpy.node import Node
 
-from std_msgs.msg import String
+from std_msgs.msg import Int64
 
 
 class TemperaturePublisher(Node):
@@ -10,7 +10,7 @@ class TemperaturePublisher(Node):
         super().__init__("temperature_publisher")
 
         self.publisher_ = self.create_publisher(
-            String,
+            Int64,
             "temperature_status",
             10
         )
@@ -24,8 +24,8 @@ class TemperaturePublisher(Node):
         )
     
     def publish_temperature(self):
-        msg = String()
-        msg.data = f"Temperature: {self.temperature}C"
+        msg = Int64()
+        msg.data = self.temperature
 
         self.publisher_.publish(msg)
 
@@ -40,7 +40,9 @@ class TemperaturePublisher(Node):
         elif self.temperature <= 25:
             self.temperature_increasing = True
 
-        self.get_logger().info(msg.data)
+        self.get_logger().info(
+            f'Temperature: {msg.data}C'
+            )
 
 def main(args=None):
 

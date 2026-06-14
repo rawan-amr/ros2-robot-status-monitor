@@ -1,7 +1,7 @@
 import rclpy
 from rclpy.node import Node
 
-from std_msgs.msg import String
+from std_msgs.msg import Int64
 
 
 class TemperatureSubscriber(Node):
@@ -10,7 +10,7 @@ class TemperatureSubscriber(Node):
           super().__init__("temperature_subscriber")
 
           self.subscription = self.create_subscription(
-               String,
+               Int64,
                "temperature_status",
                self.temperature_callback,
                10
@@ -19,7 +19,7 @@ class TemperatureSubscriber(Node):
      def temperature_callback(self, msg):
          
          self.get_logger().info(
-              f'Received: {msg.data}'
+              f'Received temperature: {msg.data}C'
               )
          
          

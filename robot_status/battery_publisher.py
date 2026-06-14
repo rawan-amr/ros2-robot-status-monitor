@@ -1,7 +1,7 @@
 import rclpy
 from rclpy.node import Node
 
-from std_msgs.msg import String
+from std_msgs.msg import Int64
 
 
 class BatteryPublisher(Node):
@@ -10,7 +10,7 @@ class BatteryPublisher(Node):
         super().__init__("battery_publisher")
 
         self.publisher_ = self.create_publisher(
-            String,
+            Int64,
             "battery_status",
             10
         )
@@ -23,8 +23,8 @@ class BatteryPublisher(Node):
         )
 
     def publish_battery(self):
-        msg = String()
-        msg.data = f"Battery: {self.battery_level}%"
+        msg = Int64()
+        msg.data = self.battery_level
 
         self.publisher_.publish(msg)
 
@@ -33,7 +33,9 @@ class BatteryPublisher(Node):
         else:
             self.battery_level -= 1
 
-        self.get_logger().info(msg.data)
+        self.get_logger().info(
+            f"Battery: {msg.data}%"
+            )
 
 
 def main(args=None):

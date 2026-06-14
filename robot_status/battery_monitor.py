@@ -1,7 +1,7 @@
 import rclpy
 from rclpy.node import Node
 
-from std_msgs.msg import String
+from std_msgs.msg import Int64
 
 
 class BatteryMonitor(Node):
@@ -10,7 +10,7 @@ class BatteryMonitor(Node):
           super().__init__("battery_monitor")
 
           self.subscription = self.create_subscription(
-               String,
+               Int64,
                "battery_status",
                self.battery_callback,
                10
@@ -19,14 +19,10 @@ class BatteryMonitor(Node):
      def battery_callback(self, msg):
          
          self.get_logger().info(
-              f'Received: {msg.data}'
+              f'Received battery level: {msg.data}%'
               )
-         
-         battery_text = msg.data
-         battery_text = battery_text.replace("Battery: ", "")
-         battery_text = battery_text.replace("%", "")
 
-         battery_level = int(battery_text)
+         battery_level = msg.data         
 
          if battery_level <= 20:
               self.get_logger().warning(

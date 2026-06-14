@@ -1,7 +1,7 @@
 import rclpy
 from rclpy.node import Node
 
-from std_msgs.msg import String
+from std_msgs.msg import Int64
 
 
 class TemperatureMonitor(Node):
@@ -10,7 +10,7 @@ class TemperatureMonitor(Node):
           super().__init__("temperature_monitor")
 
           self.subscription = self.create_subscription(
-               String,
+               Int64,
                "temperature_status",
                self.temperature_callback,
                10
@@ -19,14 +19,10 @@ class TemperatureMonitor(Node):
      def temperature_callback(self, msg):
          
          self.get_logger().info(
-              f'Received: {msg.data}'
+              f'Received temperature: {msg.data}C'
               )
-         
-         temperature_text = msg.data
-         temperature_text = temperature_text.replace("Temperature: ", "")
-         temperature_text = temperature_text.replace("C", "")
 
-         temperature_value = int(temperature_text)
+         temperature_value = msg.data
 
          if temperature_value >= 35:
               self.get_logger().warning(

@@ -1,7 +1,7 @@
 import rclpy
 from rclpy.node import Node
 
-from std_msgs.msg import String
+from std_msgs.msg import Int64
 
 
 class BatterySubscriber(Node):
@@ -10,7 +10,7 @@ class BatterySubscriber(Node):
           super().__init__("battery_subscriber")
 
           self.subscription = self.create_subscription(
-               String,
+               Int64,
                "battery_status",
                self.battery_callback,
                10
@@ -19,7 +19,7 @@ class BatterySubscriber(Node):
      def battery_callback(self, msg):
          
          self.get_logger().info(
-              f'Received: {msg.data}'
+              f'Received battery level: {msg.data}%'
               )
          
          
