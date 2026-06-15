@@ -45,9 +45,15 @@ Temperature Publisher --> /temperature_status --> Temperature Subscriber
 
 ### /battery_status
 
-Publishes battery level information.
+Message Type:
 
-Example:
+```text
+std_msgs/msg/Int64
+```
+
+Publishes battery level values.
+
+Example output from nodes:
 
 ```text
 Battery: 100%
@@ -57,9 +63,15 @@ Battery: 98%
 
 ### /temperature_status
 
-Publishes temperature information.
+Message Type:
 
-Example:
+```text
+std_msgs/msg/Int64
+```
+
+Publishes temperature values.
+
+Example output from nodes:
 
 ```text
 Temperature: 25C
@@ -96,6 +108,23 @@ Subscribes to `/temperature_status` and generates a warning when temperature rea
 ### robot_monitor
 
 Subscribes to both `/battery_status` and `/temperature_status` and monitors the overall robot condition.
+
+## Message Refactoring
+
+The project initially used `std_msgs/msg/String` messages for battery and temperature communication.
+
+As the project evolved, the battery and temperature topics were refactored to use:
+
+```text
+std_msgs/msg/Int64
+```
+
+This change provides:
+
+- Stronger type safety
+- Easier numeric comparisons
+- Cleaner monitoring logic
+- Better ROS2 design practices
 
 ## Technologies Used
 
@@ -156,11 +185,16 @@ Run Robot Monitor:
 ros2 run robot_status robot_monitor
 ```
 
-## Design Improvement
+## Design Improvements
 
-The project originally used a single topic containing multiple robot status values.
+The project evolved through multiple refactoring stages:
 
-It was later refactored into separate battery and temperature topics to improve modularity, scalability, and maintainability following ROS2 best practices.
+- Splitting robot data into separate battery and temperature topics
+- Adding dedicated monitoring nodes
+- Introducing a combined robot monitor node
+- Migrating battery and temperature communication from String messages to Int64 messages
+
+These improvements increased modularity, maintainability, and adherence to ROS2 best practices.
 
 ## Lessons Learned
 
