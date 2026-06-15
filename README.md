@@ -39,9 +39,9 @@ Temperature Publisher --> /temperature_status --> Temperature Subscriber
                            +-------------> Temperature Monitor
                            |
                            +-------------> Robot Monitor
-```
 
 Status Publisher -------> /robot_status -------> Status Subscriber
+```
 
 ## Topics
 
