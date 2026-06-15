@@ -7,7 +7,7 @@ from std_msgs.msg import String
 class StatusPublisher(Node):
 
     def __init__(self):
-        super().__init__("battery_publisher")
+        super().__init__("status_publisher")
 
         self.publisher_ = self.create_publisher(
             String,

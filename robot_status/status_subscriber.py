@@ -7,7 +7,7 @@ from std_msgs.msg import String
 class StatusSubscriber(Node):
      def __init__(self):
           
-          super().__init__("battery_subscriber")
+          super().__init__("status_subscriber")
 
           self.subscription = self.create_subscription(
                String,
