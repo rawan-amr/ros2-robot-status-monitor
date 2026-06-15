@@ -41,6 +41,8 @@ Temperature Publisher --> /temperature_status --> Temperature Subscriber
                            +-------------> Robot Monitor
 ```
 
+Status Publisher -------> /robot_status -------> Status Subscriber
+
 ## Topics
 
 ### /battery_status
@@ -79,6 +81,24 @@ Temperature: 26C
 Temperature: 27C
 ```
 
+### /robot_status
+
+Message Type:
+
+```text
+std_msgs/msg/String
+```
+
+Publishes a combined robot status message containing both battery and temperature information.
+
+Example output from nodes:
+
+```text
+Battery: 100% | Temperature: 25C
+Battery: 99% | Temperature: 26C
+Battery: 98% | Temperature: 27C
+```
+
 ## Nodes
 
 ### battery_publisher
@@ -108,6 +128,14 @@ Subscribes to `/temperature_status` and generates a warning when temperature rea
 ### robot_monitor
 
 Subscribes to both `/battery_status` and `/temperature_status` and monitors the overall robot condition.
+
+### status_publisher
+
+Publishes a combined robot status message on `/robot_status`.
+
+### status_subscriber
+
+Subscribes to `/robot_status` and displays received robot status messages.
 
 ## Message Refactoring
 
